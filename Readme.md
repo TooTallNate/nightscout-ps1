@@ -11,20 +11,33 @@ render arrows and colors as desired:
 
 <img width="77" src="https://user-images.githubusercontent.com/71256/34065696-98696f46-e1b9-11e7-9e7e-b59386fc8bcf.png">
 
-### Configure your `PS1`
+### Configure your `$PS1`
 
-The main key is to `eval` the `~/.bgl-cache` file, which looks something like:
+As a programmer, your `$PS1` is a highly intimate thing which you should take some
+time to create a setup that is pleasing to you. After all, you are staring at it
+all day. That said, how you _use_ the `nightscout-ps1` variables is up to you!
+However, for convenience, the setup from the screenshots above is included here as
+well. OK, on to the technical stuff.
+
+The main key is to `eval` the `~/.bgl-cache` file in a function which gets
+executed in the `$PS1`. The cache file looks something like:
 
 ```bash
-local nightscout_ts="1513384967000"
+local nightscout_ts="1513457266000"
 local nightscout_bgl="104"
-local nightscout_trend="Flat"
+local nightscout_trend="FortyFiveDown"
 local nightscout_target_top="180"
 local nightscout_target_bottom="80"
+local nightscout_mgdl="104"
+local nightscout_mills="1513457266000"
+local nightscout_device="share2"
+local nightscout_direction="FortyFiveDown"
+local nightscout_scaled="104"
 ```
 
-For example, in your `.bashrc`, `.profile`, or wherever you define your
-`$PS1`, define a function similar to:
+To achieve a setup similar to the screenshots above, include the code below as a
+starting point. Typically you define your `$PS1` in your `.bashrc`, `.profile`,
+or other similar files that get executed every time a shell session is started.
 
 ```bash
 RED="$(tput setaf 1 2>/dev/null || echo '')"
@@ -60,8 +73,8 @@ function __ps1_bgl {
 export PS1="\$(__ps1_bgl) $ "
 ```
 
-Restart your shell session, or `source` the file again to see the changes
-in effect.
+Remember to customize the `$PS1` further as you like! Restart your shell
+session, or `source` the file again to see the changes in effect.
 
 
 ### Setup on MacOS
