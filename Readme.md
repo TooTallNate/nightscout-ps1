@@ -1,10 +1,11 @@
 # nightscout-ps1
 
+<img width="116" alt="screen shot 2017-12-15 at 4 19 51 pm" src="https://user-images.githubusercontent.com/71256/34065482-e4ed2432-e1b6-11e7-9562-9f9bb8b7eed3.png">
+
 Periodically syncs the latest entry from Nightscout to an eval-able file.
 
 This allows you to source the file in your `$PS1` variable and include
 your latest blood glucose entry in your terminal prompt.
-
 
 ### Configure your `PS1`
 
