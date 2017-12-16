@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>io.n8.bgl-ps1</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/bgl-ps1</string>
+    </array>
+
+    <key>StartInterval</key>
+    <integer>60</integer>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>BASE_URL</key>
+        <string>__ENTER_NIGHTSCOUT_BASE_URL_HERE__</string>
+    </dict>
+</dict>
+</plist>
