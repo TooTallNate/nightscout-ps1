@@ -1,6 +1,6 @@
 # nightscout-ps1
 
-<img width="203" src="https://user-images.githubusercontent.com/71256/34065499-21048488-e1b7-11e7-985e-e2c08c3d3642.png">
+<img width="245" src="https://user-images.githubusercontent.com/71256/34074189-a4a58b6e-e25e-11e7-8368-b12e684fdd04.png">
 
 Periodically syncs the latest entry from Nightscout to an eval-able file,
 so that you can include your latest blood glucose entry in your terminal
