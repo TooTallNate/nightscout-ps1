@@ -6,6 +6,11 @@ Periodically syncs the latest entry from Nightscout to an eval-able file,
 so that you can include your latest blood glucose entry in your terminal
 prompt (also known as the `$PS1` variable).
 
+The trend and target high/low values are also provided, so that you may
+render arrows and colors as desired:
+
+<img width="77" src="https://user-images.githubusercontent.com/71256/34065696-98696f46-e1b9-11e7-9e7e-b59386fc8bcf.png">
+
 ### Configure your `PS1`
 
 The main key is to `eval` the `~/.bgl-cache` file, which looks something like:
