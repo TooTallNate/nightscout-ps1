@@ -9,7 +9,15 @@ your latest blood glucose entry in your terminal prompt.
 
 ### Configure your `PS1`
 
-The main key is to `eval` the `~/.bgl-cache` file.
+The main key is to `eval` the `~/.bgl-cache` file, which looks something like:
+
+```
+local nightscout_ts="1513384967000"
+local nightscout_bgl="104"
+local nightscout_trend="Flat"
+local nightscout_target_top="180"
+local nightscout_target_bottom="80"
+```
 
 For example, in your `.bashrc`, `.profile`, or wherever you define your
 `$PS1`, define a function similar to:
