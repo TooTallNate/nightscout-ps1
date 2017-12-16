@@ -1,6 +1,6 @@
 # nightscout-ps1
 
-<img width="116" alt="screen shot 2017-12-15 at 4 19 51 pm" src="https://user-images.githubusercontent.com/71256/34065482-e4ed2432-e1b6-11e7-9562-9f9bb8b7eed3.png">
+<img width="203" src="https://user-images.githubusercontent.com/71256/34065499-21048488-e1b7-11e7-985e-e2c08c3d3642.png">
 
 Periodically syncs the latest entry from Nightscout to an eval-able file.
 
