@@ -2,10 +2,9 @@
 
 <img width="203" src="https://user-images.githubusercontent.com/71256/34065499-21048488-e1b7-11e7-985e-e2c08c3d3642.png">
 
-Periodically syncs the latest entry from Nightscout to an eval-able file.
-
-This allows you to source the file in your `$PS1` variable and include
-your latest blood glucose entry in your terminal prompt.
+Periodically syncs the latest entry from Nightscout to an eval-able file,
+so that you can include your latest blood glucose entry in your terminal
+prompt (also known as the `$PS1` variable).
 
 ### Configure your `PS1`
 
