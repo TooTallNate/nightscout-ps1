@@ -5,18 +5,22 @@
     <key>Label</key>
     <string>io.n8.nightscout-ps1</string>
 
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>RunAtLoad</key>
+    <true/>
+
     <key>ProgramArguments</key>
     <array>
         <string>/usr/local/bin/nightscout-ps1</string>
+        <string>__ENTER_NIGHTSCOUT_URL_HERE__</string>
     </array>
-
-    <key>StartInterval</key>
-    <integer>60</integer>
 
     <key>EnvironmentVariables</key>
     <dict>
-        <key>BASE_URL</key>
-        <string>__ENTER_NIGHTSCOUT_BASE_URL_HERE__</string>
+        <key>DEBUG</key>
+        <string>nightscout-ps1*</string>
     </dict>
 </dict>
 </plist>
