@@ -1,6 +1,7 @@
 #!/usr/local/bin/node
 const os = require('os')
 const fs = require('fs-extra')
+const { join } = require('path')
 const { resolve } = require('url')
 const fetch = require('node-fetch')
 
@@ -10,7 +11,7 @@ async function get(url) {
   return res.text()
 }
 
-async function main([baseUrl, cacheFile = `${os.homedir()}/.bgl-cache`]) {
+async function main([baseUrl, cacheFile = join(os.homedir(), '.bgl-cache')]) {
   const entryUrl = resolve(baseUrl, '/api/v1/entries?count=1')
   const statusUrl = resolve(baseUrl, '/api/v1/status.json')
 
