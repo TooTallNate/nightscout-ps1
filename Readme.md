@@ -87,7 +87,7 @@ launchctl load ~/Library/LaunchAgents/io.n8.nightscout-ps1.plist
 
 ### Setup on Linux
 
-Use a cronjob via `crontab` (TODO: add real docs)
+(TODO: add `systemd` service file and real docs)
 
 
 ### Setup on Windows
