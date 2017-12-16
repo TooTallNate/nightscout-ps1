@@ -12,6 +12,11 @@ async function get(url) {
 }
 
 async function main([baseUrl, cacheFile = join(os.homedir(), '.bgl-cache')]) {
+  if (!baseUrl) {
+    console.error('FATAL: The \`BASE_URL\` environment variable must point to your Nightscout URL')
+    process.exit(1)
+  }
+
   const entryUrl = resolve(baseUrl, '/api/v1/entries?count=1')
   const statusUrl = resolve(baseUrl, '/api/v1/status.json')
 
