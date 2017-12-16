@@ -15,7 +15,7 @@ render arrows and colors as desired:
 
 The main key is to `eval` the `~/.bgl-cache` file, which looks something like:
 
-```
+```bash
 local nightscout_ts="1513384967000"
 local nightscout_bgl="104"
 local nightscout_trend="Flat"
