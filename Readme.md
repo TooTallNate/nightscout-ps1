@@ -35,8 +35,8 @@ NO_COLOR="$(tput sgr0 2>/dev/null || echo '')"
 function __ps1_bgl {
   eval "$(cat ~/.bgl-cache)"
 
-  local trend="$nightscout_trend"
-  case "${trend}" in
+  local trend="?"
+  case "${nightscout_trend}" in
     DoubleUp) trend="⇈";;
     SingleUp) trend="↑";;
     FortyFiveUp) trend="↗";;
