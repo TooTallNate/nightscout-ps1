@@ -11,6 +11,19 @@ render arrows and colors as desired:
 
 <img width="77" src="https://user-images.githubusercontent.com/71256/34065696-98696f46-e1b9-11e7-9e7e-b59386fc8bcf.png">
 
+### Installation
+
+Preferred installation is by downloading a pre-compiled binary for your platform
+
+* [GitHub Releases](https://github.com/TooTallNate/nightscout-ps1/releases)
+
+If there is no binary, or you would simply like to install manually, do so from
+npm:
+
+```bash
+$ npm install -g nightscout-ps1
+```
+
 ### Configure your `$PS1`
 
 As a programmer, your `$PS1` is a highly intimate thing which you should take some
