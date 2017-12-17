@@ -57,7 +57,7 @@ async function updateStatus(nightscout) {
   debug('Updating status %o', endpoint)
   const res = await fetch(endpoint)
   const body = await res.json()
-  debug('Status updated', endpoint)
+  debug('Status updated')
   return body
 }
 
@@ -99,7 +99,7 @@ async function onDataUpdate(cacheFile, { sgvs }) {
   }
 
   await fs.writeFile(cacheFile, body)
-  debug(`Wrote ${cacheFile}`)
+  debug('Wrote %o', cacheFile)
 }
 
 async function main({ nightscout, cacheFile }) {
