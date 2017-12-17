@@ -12,7 +12,8 @@
     "ms": "^2.1.1",
     "node-fetch": "^1.7.3",
     "socket.io-client": "^2.0.4",
-    "then-sleep": "^1.0.1"
+    "then-sleep": "^1.0.1",
+    "wake-event": "0.0.1"
   },
   "devDependencies": {
     "pkg": "^4.3.0-beta.5"

@@ -7,6 +7,7 @@ const { join } = require('path')
 const { resolve } = require('url')
 const fetch = require('node-fetch')
 const sleep = require('then-sleep')
+const onWake = require('wake-event')
 const sio = require('socket.io-client')
 const debug = require('debug')('nightscout-ps1')
 
@@ -33,9 +34,16 @@ if (!flags.nightscout) {
   process.exit(1)
 }
 
+let socket
 let statusPromise
 exit(pollStatus(flags))
 exit(main(flags))
+
+// reset Socket.io connection after the computer wakes from sleep
+onWake(() => {
+  debug('wake event')
+  exit(main(flags))
+})
 
 function exit(promise) {
   promise.catch(err => {
@@ -103,7 +111,13 @@ async function onDataUpdate(cacheFile, { sgvs }) {
 }
 
 async function main({ nightscout, cacheFile }) {
-  const socket = sio.connect(nightscout)
+  if (socket) {
+    debug('socket.close()')
+    socket.close()
+  }
+
+  debug('Creating socket.io connection %o', nightscout)
+  socket = sio.connect(nightscout)
   socket.on('dataUpdate', e => exit(onDataUpdate(cacheFile, e)))
 
   const auth = await emit(socket, 'authorize', {
@@ -116,6 +130,7 @@ async function main({ nightscout, cacheFile }) {
   debug('Waiting for "dataUpdate" events')
 
   await once(socket, 'close')
+  socket = null
   debug('Socket closed. Establishing new connection')
   return main(flags)
 }
