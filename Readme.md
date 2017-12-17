@@ -87,7 +87,11 @@ launchctl load ~/Library/LaunchAgents/io.n8.nightscout-ps1.plist
 
 ### Setup on Linux
 
-(TODO: add `systemd` service file and real docs)
+```bash
+cp service/nightscout-ps1.service /etc/systemd/system/
+sudo systemd start nightscout-ps1
+sudo systemd enable nightscout-ps1
+```
 
 
 ### Setup on Windows
