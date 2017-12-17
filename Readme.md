@@ -90,7 +90,7 @@ Remember to customize the `$PS1` further as you like! Restart your shell
 session, or `source` the file again to see the changes in effect.
 
 
-### Setup on MacOS
+### Setup on macOS
 
 ```bash
 cp service/io.n8.nightscout-ps1.plist ~/Library/LaunchAgents/
