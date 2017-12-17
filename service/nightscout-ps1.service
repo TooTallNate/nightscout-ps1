@@ -1,0 +1,14 @@
+[Unit]
+Description=Nightscout PS1 Daemon
+After=network.target
+
+[Service]
+User=__YOUR_USERNAME__
+Group=__YOUR_GROUP__
+Type=simple
+ExecStart=/usr/local/bin/nightscout-ps1 __YOUR_NIGHTSCOUT_URL__
+Environment=DEBUG=nightscout-ps1*
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
