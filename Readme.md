@@ -109,8 +109,8 @@ sudo systemd enable nightscout-ps1
 
 ### Setup on Windows
 
-Check out this blog post by [Scott Hanselman](https://twitter.com/shanselman)
-to setup for Bash on Windows and PowerShell:
+Check out this blog post by [Scott Hanselman](https://twitter.com/shanselman) to
+setup as a Windows Service:
 
 * [Visualizing your real-time blood sugar values AND a Git Prompt on Windows
   PowerShell and Linux
