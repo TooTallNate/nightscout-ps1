@@ -1,6 +1,6 @@
 {
   "name": "nightscout-ps1",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Syncs the latest entry from Nightscout to an eval-able file",
   "bin": "./bin/nightscout-ps1.js",
   "author": "Nathan Rajlich <n@n8.io>",
