@@ -29,5 +29,5 @@ for fullpath in "${dir}"/*; do
     dest="${dest}.${ext}"
   fi
 
-  mv "${fullpath}" "${dest}"
+  mv -v "${fullpath}" "${dest}"
 done
