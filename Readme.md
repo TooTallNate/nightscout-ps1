@@ -2,7 +2,7 @@
 
 <img width="245" src="https://user-images.githubusercontent.com/71256/34074189-a4a58b6e-e25e-11e7-8368-b12e684fdd04.png">
 
-Periodically syncs the latest entry from Nightscout to an eval-able file,
+Periodically syncs the latest entry from Nightscout to a source-able file,
 so that you can include your latest blood glucose entry in your terminal
 prompt (also known as the `$PS1` variable).
 
@@ -32,7 +32,7 @@ all day. That said, how you _use_ the `nightscout-ps1` variables is up to you!
 However, for convenience, the setup from the screenshots above is included here as
 well. OK, on to the technical stuff.
 
-The main key is to `eval` the `~/.bgl-cache` file in a function which gets
+The main key is to `source` the `~/.bgl-cache` file in a function which gets
 executed in the `$PS1`. The cache file looks something like:
 
 ```bash
@@ -59,7 +59,7 @@ YELLOW="$(tput setaf 3 2>/dev/null || echo '')"
 NO_COLOR="$(tput sgr0 2>/dev/null || echo '')"
 
 function __ps1_bgl {
-  eval "$(cat ~/.bgl-cache)"
+  source ~/.bgl-cache
 
   local trend="?"
   case "${nightscout_trend}" in
