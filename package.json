@@ -19,7 +19,7 @@
     "pkg": "^4.3.0-beta.5"
   },
   "scripts": {
-    "pack": "pkg bin/nightscout-ps1.js --config package.json --output \"packed/nightscout-ps1-`git describe --tags`\" -t node8-alpine,node8-linux,node8-macos,node8-win"
+    "pack": "./pack.sh"
   },
   "pkg": {
     "scripts": [
