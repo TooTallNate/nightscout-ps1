@@ -13,21 +13,12 @@ pkg bin/nightscout-ps1.js \
   -t node8-alpine,node8-linux,node8-macos,node8-win
 
 for fullpath in "${dir}"/*; do
-  # https://stackoverflow.com/a/1403489/376773
-  filename="${fullpath##*/}"                      # Strip longest match of */ from start
-  dir="${fullpath:0:${#fullpath} - ${#filename}}" # Substring from 0 thru pos of filename
-  base="${filename%.[^.]*}"                       # Strip shortest match of . plus at least one non-dot char from end
-  ext="${filename:${#base} + 1}"                  # Substring from len of base thru end
-  if [ -z "$base" -a -n "$ext" ]; then          # If we have an extension and no base, it's really the base
-      base=".$ext"
-      ext=""
+  ext=""
+  if [ "${fullpath: -4}" = ".exe" ]; then
+    ext=".exe"
   fi
-  #printf  "$fullpath:\n\tdir  = \"$dir\"\n\tbase = \"$base\"\n\text  = \"$ext\"\n"
 
-  dest="${dir}${base}-${arch}"
-  if [ ! -z "${ext}" ]; then
-    dest="${dest}.${ext}"
-  fi
+  dest="${dir}/$(basename "${fullpath}" "${ext}")-${arch}${ext}"
 
   mv -v "${fullpath}" "${dest}"
 done
