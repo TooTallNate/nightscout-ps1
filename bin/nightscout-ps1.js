@@ -17,7 +17,7 @@ args
   .option('nightscout', 'URL of your Nightscout deployment', '')
   .option(
     'cache-file',
-    'Path to the eval-able file',
+    'Path to the source-able file',
     join(os.homedir(), '.bgl-cache')
   )
 
