@@ -5,6 +5,10 @@
   "bin": "./bin/nightscout-ps1.js",
   "author": "Nathan Rajlich <n@n8.io>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TooTallNate/nightscout-ps1.git"
+  },
   "dependencies": {
     "args": "^3.0.8",
     "debug": "^3.1.0",
