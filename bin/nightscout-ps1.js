@@ -81,8 +81,11 @@ function sortMills(a, b) {
   return a.mills - b.mills
 }
 
-async function onDataUpdate(cacheFile, { sgvs }) {
-  if (!sgvs) return
+async function onDataUpdate(cacheFile, event) {
+  debug('Got event: %o', event)
+  const { sgvs } = event
+  if (!sgvs || !sgvs.length) return
+
   const entry = sgvs.sort(sortMills).pop()
   debug('Got entry: %o', entry)
 
