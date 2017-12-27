@@ -10,7 +10,7 @@ mkdir -p "${dir}"
 pkg bin/nightscout-ps1.js \
   --config package.json \
   --output "${dir}/nightscout-ps1-v${tag}" \
-  -t node8-alpine,node8-linux,node8-macos,node8-win
+  -t node9-alpine,node9-linux,node9-macos,node9-win
 
 for fullpath in "${dir}"/*; do
   ext=""
