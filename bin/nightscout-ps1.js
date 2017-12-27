@@ -13,10 +13,7 @@ const { join } = require('path')
 const { homedir } = require('os')
 
 args
-  .command(
-    'daemon',
-    'Start the daemon'
-  )
+  .command('daemon', 'Start the daemon')
   .option(
     'cache-file',
     'Path to read the latest reading JSON file from',
@@ -71,30 +68,24 @@ let color = v => v
 let strike = v => v
 const diff = Date.now() - mills
 const MINUTE = 1000 * 60
-if (alarmTimeagoUrgent && diff > (alarmTimeagoUrgentMins * MINUTE)) {
+if (alarmTimeagoUrgent && diff > alarmTimeagoUrgentMins * MINUTE) {
   trend = '↛'
   color = chalk.hex('#FF0000')
   strike = strikethrough
-
-} else if (alarmTimeagoWarn && diff > (alarmTimeagoWarnMins * MINUTE)) {
+} else if (alarmTimeagoWarn && diff > alarmTimeagoWarnMins * MINUTE) {
   trend = '↛'
   color = chalk.hex('#FFF000')
   strike = strikethrough
-
 } else if (mgdl > bgHigh) {
   color = chalk.hex('#FFF000').bold
-
 } else if (mgdl > bgTargetTop) {
   color = chalk.yellow
-
 } else if (mgdl < bgLow) {
   color = chalk.hex('#FF0000').bold
-
 } else if (mgdl < bgTargetBottom) {
   color = chalk.red
-
 } else {
   color = chalk.green
 }
 
-console.log(color(`${strike(String(mgdl).padStart(3 ,'0'))} ${trend}`))
+console.log(color(`${strike(String(mgdl).padStart(3, '0'))} ${trend}`))
