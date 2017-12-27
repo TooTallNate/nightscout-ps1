@@ -4,24 +4,26 @@ if (process.argv[2] === 'daemon') {
 }
 
 // force chalk colors to be enabled because redirected
-// usage in the PS1 causes stdout to not be a TTY
+// usage in the $PS1 causes stdout to not be a TTY
 process.env.FORCE_COLOR = '1'
 
-const os = require('os')
 const args = require('args')
-const fs = require('fs-extra')
 const chalk = require('chalk')
 const { join } = require('path')
+const { homedir } = require('os')
 
-const { name } = require('../package.json')
+args
+  .command(
+    'daemon',
+    'Start the daemon'
+  )
+  .option(
+    'cache-file',
+    'Path to read the latest reading JSON file from',
+    join(homedir(), '.bgl-cache.json')
+  )
 
-args.option(
-  'cache-file',
-  'Path to read the latest reading JSON file from',
-  join(os.homedir(), '.bgl-cache.json')
-)
-
-const { cacheFile } = args.parse(process.argv, { name })
+const { cacheFile } = args.parse(process.argv, { name: 'nightscout-ps1' })
 
 const strikethrough = (text, s = '\u0336') =>
   Array.from(String(text)).join(s) + s
@@ -35,7 +37,7 @@ const {
     alarmTimeagoUrgentMins,
     thresholds: { bgHigh, bgTargetTop, bgTargetBottom, bgLow }
   }
-} = fs.readJsonSync(cacheFile)
+} = require(cacheFile)
 
 let trend
 switch (direction) {
