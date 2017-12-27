@@ -1,139 +1,98 @@
 #!/usr/local/bin/node
-const ms = require('ms')
+if (process.argv[2] === 'daemon') {
+  return require('./nightscout-ps1-daemon')
+}
+
+// force chalk colors to be enabled because redirected
+// usage in the PS1 causes stdout to not be a TTY
+process.env.FORCE_COLOR = '1'
+
 const os = require('os')
 const args = require('args')
 const fs = require('fs-extra')
+const chalk = require('chalk')
 const { join } = require('path')
-const { resolve } = require('url')
-const fetch = require('node-fetch')
-const sleep = require('then-sleep')
-const onWake = require('wake-event')
-const sio = require('socket.io-client')
-const debug = require('debug')('nightscout-ps1')
 
-const pkg = require('../package.json')
+const { name } = require('../package.json')
 
-args
-  .option('nightscout', 'URL of your Nightscout deployment', '')
-  .option(
-    'cache-file',
-    'Path to the source-able file',
-    join(os.homedir(), '.bgl-cache')
-  )
+args.option(
+  'cache-file',
+  'Path to read the latest reading JSON file from',
+  join(os.homedir(), '.bgl-cache.json')
+)
 
-const flags = args.parse(process.argv, {
-  name: pkg.name
-})
-if (args.sub.length > 0) {
-  flags.nightscout = args.sub.shift()
-}
-if (!flags.nightscout) {
-  console.error(
-    'FATAL: The `--nightscout` parameter must point to your Nightscout URL'
-  )
-  process.exit(1)
-}
+const { cacheFile } = args.parse(process.argv, { name })
 
-let socket
-let statusPromise
-exit(pollStatus(flags))
-exit(main(flags))
+const strikethrough = (text, s = '\u0336') =>
+  Array.from(String(text)).join(s) + s
 
-// reset Socket.io connection after the computer wakes from sleep
-onWake(() => {
-  debug('wake event')
-  exit(main(flags))
-})
-
-function exit(promise) {
-  promise.catch(err => {
-    console.error(err)
-    process.exit(1)
-  })
-}
-
-function emit(e, ...args) {
-  return new Promise((resolve, reject) => e.emit(...args, resolve))
-}
-
-function once(e, name) {
-  return new Promise((resolve, reject) => e.once(name, resolve))
-}
-
-async function updateStatus(nightscout) {
-  const endpoint = resolve(nightscout, '/api/v1/status.json')
-  debug('Updating status %o', endpoint)
-  const res = await fetch(endpoint)
-  const body = await res.json()
-  debug('Status updated')
-  return body
-}
-
-async function pollStatus({ nightscout }) {
-  statusPromise = updateStatus(nightscout)
-  await statusPromise
-  // let that response be cached for a little while
-  await sleep(ms('5m'))
-  return pollStatus(flags)
-}
-
-function sortMills(a, b) {
-  return a.mills - b.mills
-}
-
-async function onDataUpdate(cacheFile, event) {
-  debug('Got event: %o', event)
-  const { sgvs } = event
-  if (!sgvs || !sgvs.length) return
-
-  const entry = sgvs.sort(sortMills).pop()
-  debug('Got entry: %o', entry)
-
-  const status = await Promise.resolve(statusPromise)
-
-  const data = Object.assign(
-    {
-      ts: entry.mills,
-      bgl: entry.mgdl,
-      trend: entry.direction,
-      target_top: status.settings.thresholds.bgTargetTop,
-      target_bottom: status.settings.thresholds.bgTargetBottom
-    },
-    entry
-  )
-
-  // convert `data` into local Bash variables
-  let body = ''
-  for (const key of Object.keys(data)) {
-    const value = JSON.stringify(String(data[key]))
-    body += `local nightscout_${key}=${value}\n`
+const {
+  latestEntry: { mgdl, mills, direction },
+  settings: {
+    alarmTimeagoWarn,
+    alarmTimeagoWarnMins,
+    alarmTimeagoUrgent,
+    alarmTimeagoUrgentMins,
+    thresholds: { bgHigh, bgTargetTop, bgTargetBottom, bgLow }
   }
+} = fs.readJsonSync(cacheFile)
 
-  await fs.writeFile(cacheFile, body)
-  debug('Wrote %o', cacheFile)
+let trend
+switch (direction) {
+  case 'DoubleUp':
+    trend = '⇈'
+    break
+  case 'SingleUp':
+    trend = '↑'
+    break
+  case 'FortyFiveUp':
+    trend = '↗'
+    break
+  case 'Flat':
+    trend = '→'
+    break
+  case 'FortyFiveDown':
+    trend = '↘'
+    break
+  case 'SingleDown':
+    trend = '↓'
+    break
+  case 'DoubleDown':
+    trend = '⇊'
+    break
+  default:
+    trend = '?'
+    break
 }
 
-async function main({ nightscout, cacheFile }) {
-  if (socket) {
-    debug('socket.close()')
-    socket.close()
-  }
+let color = v => v
+let strike = v => v
+const diff = Date.now() - mills
+const MINUTE = 1000 * 60
+if (alarmTimeagoUrgent && diff > (alarmTimeagoUrgentMins * MINUTE)) {
+  trend = '↛'
+  color = chalk.hex('#FF0000')
+  strike = strikethrough
 
-  debug('Creating socket.io connection %o', nightscout)
-  socket = sio.connect(nightscout)
-  socket.on('dataUpdate', e => exit(onDataUpdate(cacheFile, e)))
+} else if (alarmTimeagoWarn && diff > (alarmTimeagoWarnMins * MINUTE)) {
+  trend = '↛'
+  color = chalk.hex('#FFF000')
+  strike = strikethrough
 
-  const auth = await emit(socket, 'authorize', {
-    client: 'web',
-    secret: null,
-    token: null,
-    history: 1
-  })
-  debug('Auth results %o', auth)
-  debug('Waiting for "dataUpdate" events')
+} else if (mgdl > bgHigh) {
+  color = chalk.hex('#FFF000').bold
 
-  await once(socket, 'close')
-  socket = null
-  debug('Socket closed. Establishing new connection')
-  return main(flags)
+} else if (mgdl > bgTargetTop) {
+  color = chalk.yellow
+
+} else if (mgdl < bgLow) {
+  color = chalk.hex('#FF0000').bold
+
+} else if (mgdl < bgTargetBottom) {
+  color = chalk.red
+
+} else {
+  color = chalk.green
 }
+
+console.log(color(`${strike(String(mgdl).padStart(3 ,'0'))} ${trend}`))
