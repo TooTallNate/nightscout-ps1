@@ -1,6 +1,7 @@
 #!/usr/local/bin/node
 const ms = require('ms')
 const os = require('os')
+const ini = require('ini')
 const args = require('args')
 const fs = require('fs-extra')
 const { join } = require('path')
@@ -9,16 +10,27 @@ const fetch = require('node-fetch')
 const sleep = require('then-sleep')
 const onWake = require('wake-event')
 const sio = require('socket.io-client')
+const snakeCase = require('snake-case')
 const debug = require('debug')('nightscout-ps1')
 
 const pkg = require('../package.json')
+
+const toSnakeCase = _o => {
+  if (!_o) return _o
+  const o = {}
+  for (const k of Object.keys(_o)) {
+    const v = _o[k]
+    o[snakeCase(k)] = typeof v === 'object' ? toSnakeCase(v) : v
+  }
+  return o
+}
 
 args
   .option('nightscout', 'URL of your Nightscout deployment', '')
   .option(
     'cache-file',
-    'Path to write the latest reading JSON file',
-    join(os.homedir(), '.bgl-cache.json')
+    'Path to write the latest reading file',
+    join(os.homedir(), '.nightscout-latest-entry')
   )
 
 const flags = args.parse(process.argv, {
@@ -100,7 +112,7 @@ function sortMills(a, b) {
 }
 
 async function onDataUpdate(event) {
-  //debug('Got event %o', event)
+  debug('Got event %o', event)
   const { sgvs } = event
   if (!sgvs || !sgvs.length) return
 
@@ -109,9 +121,12 @@ async function onDataUpdate(event) {
 
   const status = await Promise.resolve(statusPromise)
 
-  const data = Object.assign({ latestEntry }, status)
+  const data = toSnakeCase({
+    latestEntry,
+    settings: status.settings
+  })
 
-  await fs.writeJSON(flags.cacheFile, data, { spaces: 2 })
+  await fs.writeFile(flags.cacheFile, ini.stringify(data))
   debug('Wrote %o', flags.cacheFile)
 }
 

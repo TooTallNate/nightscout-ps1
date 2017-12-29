@@ -13,8 +13,7 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/nightscout-ps1</string>
-        <string>daemon</string>
+        <string>/usr/local/bin/nightscout-ps1-daemon</string>
         <string>__ENTER_NIGHTSCOUT_URL_HERE__</string>
     </array>
 

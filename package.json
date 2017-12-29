@@ -1,21 +1,22 @@
 {
-  "name": "nightscout-ps1",
-  "version": "1.1.4",
-  "description": "Syncs the latest entry from Nightscout to a source-able file",
-  "bin": "./bin/nightscout-ps1.js",
+  "name": "nightscout-ps1-daemon",
+  "version": "2.0.0",
+  "description": "Syncs the latest blood glucose reading from Nightscout to an ini file",
+  "bin": "./bin/nightscout-ps1-daemon.js",
   "author": "Nathan Rajlich <n@n8.io>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/TooTallNate/nightscout-ps1.git"
+    "url": "git://github.com/TooTallNate/nightscout-ps1-daeomon.git"
   },
   "dependencies": {
     "args": "^3.0.8",
-    "chalk": "^2.3.0",
     "debug": "^3.1.0",
     "fs-extra": "^5.0.0",
+    "ini": "^1.3.5",
     "ms": "^2.1.1",
     "node-fetch": "^1.7.3",
+    "snake-case": "^2.1.0",
     "socket.io-client": "^2.0.4",
     "then-sleep": "^1.0.1",
     "wake-event": "0.0.1"
