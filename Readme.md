@@ -1,4 +1,4 @@
-# nightscout-ps1
+# nightscout-ps1-daemon
 
 <img width="245" src="https://user-images.githubusercontent.com/71256/34074189-a4a58b6e-e25e-11e7-8368-b12e684fdd04.png">
 
