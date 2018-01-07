@@ -13,7 +13,7 @@ const sio = require('socket.io-client')
 const snakeCase = require('snake-case')
 const debug = require('debug')('nightscout-ps1')
 
-const pkg = require('../package.json')
+const { name } = require('../package.json')
 
 const toSnakeCase = _o => {
   if (!_o) return _o
@@ -33,9 +33,7 @@ args
     join(os.homedir(), '.nightscout-latest-entry')
   )
 
-const flags = args.parse(process.argv, {
-  name: pkg.name + ' daemon'
-})
+const flags = args.parse(process.argv, { name })
 while (args.sub.length > 0) {
   const command = args.sub.shift()
   if (command === 'daemon') {
