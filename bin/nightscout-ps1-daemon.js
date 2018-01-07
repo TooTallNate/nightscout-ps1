@@ -63,6 +63,7 @@ const resolvePrefix = async _url => {
 const resolvedNightscout = resolvePrefix(flags.nightscout)
 let socket
 let statusPromise
+let previousEntry
 exit(pollStatus())
 exit(main())
 
@@ -119,12 +120,13 @@ async function onDataUpdate(event) {
 
   const status = await Promise.resolve(statusPromise)
 
-  const data = toSnakeCase({
+  const data = {
+    previousEntry: previousEntry || latestEntry,
     latestEntry,
     settings: status.settings
-  })
+  }
 
-  await fs.writeFile(flags.cacheFile, ini.stringify(data))
+  await fs.writeFile(flags.cacheFile, ini.stringify(toSnakeCase(data)))
   debug('Wrote %o', flags.cacheFile)
 }
 
