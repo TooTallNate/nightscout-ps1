@@ -126,6 +126,8 @@ async function onDataUpdate(event) {
     settings: status.settings
   }
 
+  previousEntry = latestEntry
+
   await fs.writeFile(flags.cacheFile, ini.stringify(toSnakeCase(data)))
   debug('Wrote %o', flags.cacheFile)
 }
