@@ -5,12 +5,12 @@ const ini = require('ini')
 const args = require('args')
 const fs = require('fs-extra')
 const { join } = require('path')
-const { parse, resolve } = require('url')
 const fetch = require('node-fetch')
 const sleep = require('then-sleep')
 const onWake = require('wake-event')
 const sio = require('socket.io-client')
 const snakeCase = require('snake-case')
+const { parse, resolve } = require('url')
 const debug = require('debug')('nightscout-ps1')
 
 const { name } = require('../package.json')
@@ -115,8 +115,15 @@ async function onDataUpdate(event) {
   const { sgvs } = event
   if (!sgvs || !sgvs.length) return
 
-  const latestEntry = sgvs.sort(sortMills).pop()
+  const sorted = sgvs.sort(sortMills)
+  const latestEntry = sorted.pop()
   debug('Latest entry %o', latestEntry)
+
+  if (sorted.length > 0) {
+    // If there's > 1 entry in the sgvs array, then we can use the next entry
+    // for the `previousEntry`. This usually happens upon initial/re-connection.
+    previousEntry = sorted.pop()
+  }
 
   const status = await Promise.resolve(statusPromise)
 
