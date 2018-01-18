@@ -140,12 +140,13 @@ async function onDataUpdate(event) {
 }
 
 async function main() {
+  const nightscout = await resolvedNightscout
+
   if (socket) {
     debug('socket.close()')
     socket.close()
   }
 
-  const nightscout = await resolvedNightscout
   debug('Creating socket.io connection %o', nightscout)
   socket = sio.connect(nightscout)
   socket.on('dataUpdate', e => exit(onDataUpdate(e)))
