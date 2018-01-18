@@ -63,13 +63,13 @@ const resolvePrefix = async _url => {
 const resolvedNightscout = resolvePrefix(flags.nightscout)
 let socket
 let statusPromise
-let previousEntry
+let entries = new Map()
 exit(pollStatus())
 exit(main())
 
 // reset Socket.io connection after the computer wakes from sleep
 onWake(() => {
-  debug('wake event')
+  debug('Wake event')
   exit(main())
 })
 
@@ -106,34 +106,37 @@ async function pollStatus() {
   return pollStatus()
 }
 
-function sortMills(a, b) {
-  return a.mills - b.mills
-}
-
 async function onDataUpdate(event) {
   debug('Got event %o', event)
   const { sgvs } = event
-  if (!sgvs || !sgvs.length) return
+  if (!sgvs) return
+  for (const entry of sgvs) {
+    entries.set(entry.mills, entry)
+  }
 
-  const sorted = sgvs.sort(sortMills)
-  const latestEntry = sorted.pop()
+  const sorted = Array.from(entries.keys()).sort()
+
+  // Purge old entries, keep up to two
+  const count = Math.max(0, sorted.length - 2)
+  debug('Purging %o entries', count);
+  for (let i = 0; i < count; i++) {
+    const key = sorted.shift()
+    entries.delete(key)
+  }
+
+  const latestEntry = entries.get(sorted.pop())
   debug('Latest entry %o', latestEntry)
 
-  if (sorted.length > 0) {
-    // If there's > 1 entry in the sgvs array, then we can use the next entry
-    // for the `previousEntry`. This usually happens upon initial/re-connection.
-    previousEntry = sorted.pop()
-  }
+  const previousEntry = entries.get(sorted.pop() || latestEntry.mills)
+  debug('Previous entry %o', previousEntry)
 
-  const status = await Promise.resolve(statusPromise)
+  const { settings } = await Promise.resolve(statusPromise)
 
   const data = {
-    previousEntry: previousEntry || latestEntry,
+    previousEntry,
     latestEntry,
-    settings: status.settings
+    settings
   }
-
-  previousEntry = latestEntry
 
   await fs.writeFile(flags.cacheFile, ini.stringify(toSnakeCase(data)))
   debug('Wrote %o', flags.cacheFile)
