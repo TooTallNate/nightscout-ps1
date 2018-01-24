@@ -15,13 +15,13 @@ render arrows and colors as desired:
 
 Preferred installation is by downloading a pre-compiled binary for your platform:
 
-* [GitHub Releases](https://github.com/TooTallNate/nightscout-ps1/releases)
+* [GitHub Releases](https://github.com/TooTallNate/nightscout-ps1-daemon/releases)
 
 If there is no binary for your platform, or you would simply like to install
 from source, do so from `npm`:
 
 ```bash
-$ npm install -g nightscout-ps1
+$ npm install -g nightscout-ps1-daemon
 ```
 
 ### Configure your `$PS1`
