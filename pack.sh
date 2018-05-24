@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 dir=packed
 arch="$(node -p process.arch)"
