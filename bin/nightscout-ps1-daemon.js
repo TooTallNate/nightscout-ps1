@@ -1,7 +1,7 @@
 #!/usr/local/bin/node
 const ms = require('ms');
 const os = require('os');
-const ini = require('ini');
+const url = require('url');
 const args = require('args');
 const {join} = require('path');
 const fetch = require('node-fetch');
@@ -10,22 +10,14 @@ const onWake = require('wake-event');
 const sio = require('socket.io-client');
 const snakeCase = require('snake-case');
 const {writeFile} = require('fs-extra');
-const {parse, resolve} = require('url');
 const debug = require('debug')('nightscout-ps1');
 
-const {name} = require('../package.json');
-
-const toSnakeCase = _o => {
-	if (!_o) {
-		return _o;
-	}
-	const o = {};
-	for (const k of Object.keys(_o)) {
-		const v = _o[k];
-		o[snakeCase(k)] = typeof v === 'object' ? toSnakeCase(v) : v;
-	}
-	return o;
-};
+let socket;
+let statusPromise;
+// eslint-disable-next-line prefer-const
+let resolvedNightscout;
+const entries = new Map();
+const {name: packageName} = require('../package.json');
 
 function *flatten(input, prefix = '') {
 	for (const key of Object.keys(input)) {
@@ -53,7 +45,7 @@ args
 		join(os.homedir(), '.nightscout-latest-entry')
 	);
 
-const flags = args.parse(process.argv, {name});
+const flags = args.parse(process.argv, {name: packageName});
 while (args.sub.length > 0) {
 	const command = args.sub.shift();
 	if (command === 'daemon') {
@@ -70,28 +62,15 @@ if (!flags.nightscout) {
 	process.exit(1);
 }
 
-const resolvePrefix = async _url => {
-	let url = _url;
-	if (!parse(url).protocol) {
-		url = `http://${url}`;
+const resolvePrefix = async _href => {
+	let href = _href;
+	if (!url.parse(href).protocol) {
+		href = `http://${href}`;
 	}
-	const res = await fetch(url);
-	debug('Resolved URL %o to %o', _url, res.url);
+	const res = await fetch(href);
+	debug('Resolved URL %o to %o', _href, res.url);
 	return res.url;
 };
-
-const resolvedNightscout = resolvePrefix(flags.nightscout);
-let socket;
-let statusPromise;
-const entries = new Map();
-exit(pollStatus());
-exit(main());
-
-// reset Socket.io connection after the computer wakes from sleep
-onWake(() => {
-	debug('Wake event');
-	exit(main());
-});
 
 function exit(promise) {
 	promise.catch(err => {
@@ -100,17 +79,9 @@ function exit(promise) {
 	});
 }
 
-function emit(e, ...args) {
-	return new Promise((resolve, reject) => e.emit(...args, resolve));
-}
-
-function once(e, name) {
-	return new Promise((resolve, reject) => e.once(name, resolve));
-}
-
 async function updateStatus() {
 	const nightscout = await resolvedNightscout;
-	const endpoint = resolve(nightscout, '/api/v1/status.json');
+	const endpoint = url.resolve(nightscout, '/api/v1/status.json');
 	debug('Updating status %o', endpoint);
 	const res = await fetch(endpoint);
 	const body = await res.json();
@@ -124,6 +95,14 @@ async function pollStatus() {
 	// let that response be cached for a little while
 	await sleep(ms('5m'));
 	return pollStatus();
+}
+
+function emit(e, ...argv) {
+	return new Promise(resolve => e.emit(...argv, resolve));
+}
+
+function once(e, name) {
+	return new Promise(resolve => e.once(name, resolve));
 }
 
 async function onDataUpdate(event) {
@@ -192,3 +171,13 @@ async function main() {
 	debug('Socket closed. Establishing new connection');
 	return main();
 }
+
+resolvedNightscout = resolvePrefix(flags.nightscout);
+exit(pollStatus());
+exit(main());
+
+// reset Socket.io connection after the computer wakes from sleep
+onWake(() => {
+	debug('Wake event');
+	exit(main());
+});
