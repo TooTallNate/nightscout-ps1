@@ -3,7 +3,7 @@ const ms = require('ms');
 const os = require('os');
 const url = require('url');
 const args = require('args');
-const {join} = require('path');
+const path = require('path');
 const fetch = require('node-fetch');
 const sleep = require('then-sleep');
 const onWake = require('wake-event');
@@ -11,6 +11,7 @@ const sio = require('socket.io-client');
 const snakeCase = require('snake-case');
 const {writeFile} = require('fs-extra');
 const debug = require('debug')('nightscout-ps1');
+const homedir = os.homedir();
 
 let socket;
 let statusPromise;
@@ -37,24 +38,42 @@ function *flatten(input, prefix = '') {
 	}
 }
 
+const toJson = data => JSON.stringify(data, null, '\t');
+const toEnv = data => Array.from(flatten(data))
+	.map(([key, value]) => `${key}=${JSON.stringify(value)}`)
+	.join('\n');
+
+const formatters = new Map([
+	['.env', toEnv],
+	['.json', toJson]
+]);
+
 args
 	.option('nightscout', 'URL of your Nightscout deployment', '')
 	.option(
 		'cache-file',
 		'Path to write the latest reading file',
-		join(os.homedir(), '.nightscout-latest-entry')
+		[path.join(homedir, '.nightscout-ps1.env')]
 	);
 
 const flags = args.parse(process.argv, {name: packageName});
-while (args.sub.length > 0) {
-	const command = args.sub.shift();
-	if (command === 'daemon') {
-		// ignore…
-	} else {
-		// assume it's a Nightscout URL
-		flags.nightscout = command;
+
+// Validate file extensions and pre-cache the formatters
+for (const file of flags.cacheFile) {
+	const {ext} = path.parse(file);
+	const formatter = formatters.get(ext);
+	if (!formatter) {
+		console.error(`File extension "${ext}" does not have a formatter!`);
+		process.exit(2);
 	}
+	formatters.set(file, formatter);
 }
+
+if (!flags.nightscout && args.sub.length > 0) {
+	// assume it's a Nightscout URL
+	flags.nightscout = args.sub[0];
+}
+
 if (!flags.nightscout) {
 	console.error(
 		'FATAL: The `--nightscout` parameter must point to your Nightscout URL'
@@ -139,10 +158,11 @@ async function onDataUpdate(event) {
 		settings
 	};
 
-	const envs = Array.from(flatten(data)).map(([key, value]) => `local ${key}=${JSON.stringify(value)}\n`)
-		.join('');
-	await writeFile(flags.cacheFile, envs);
-	debug('Wrote %o', flags.cacheFile);
+	await Promise.all(flags.cacheFile.map(async file => {
+		const str = formatters.get(file)(data);
+		await writeFile(file, `${str}\n`);
+		debug('Wrote %o', file);
+	}));
 }
 
 async function main() {
