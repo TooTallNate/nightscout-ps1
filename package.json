@@ -1,8 +1,8 @@
 {
-  "name": "nightscout-ps1-daemon",
+  "name": "nightscout-ps1",
   "version": "2.1.1",
   "description": "Syncs the latest blood glucose reading from Nightscout to an eval file",
-  "bin": "./bin/nightscout-ps1-daemon.js",
+  "bin": "./bin/nightscout-ps1.js",
   "author": "Nathan Rajlich <n@n8.io>",
   "license": "MIT",
   "repository": {

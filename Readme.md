@@ -1,20 +1,35 @@
-# nightscout-ps1-daemon
+# nightscout-ps1
 
-Periodically syncs the latest entry from Nightscout to an INI file,
-for use with [`nightscout-ps1`][ps1].
+A daemon that periodically syncs the latest two entries from Nightscout to
+a file the can be consumed by your command line prompt (a.k.a. `$PS1`).
 
-### Installation
+## Installation
 
 Preferred installation is by downloading a pre-compiled binary for your platform:
 
-* [GitHub Releases](https://github.com/TooTallNate/nightscout-ps1-daemon/releases)
+* [GitHub Releases](https://github.com/TooTallNate/nightscout-ps1/releases)
 
 If there is no binary for your platform, or you would simply like to install
-from source, do so from `npm`:
+from source, you may install from the `npm` registry:
 
 ```bash
-$ npm install -g nightscout-ps1-daemon
+$ npm install -g nightscout-ps1
 ```
+
+
+## Usage
+
+The flags for usage of `nightscout-ps1` are listed here, however it is highly
+recommended that you set up the daemon as a "service" for your operating system.
+
+```bash
+$ nightscout-ps1 -n <Nightscout URL> -c ~/.nightscout-ps1.env
+```
+
+| Flag                |  Description                                                         |
+|---------------------|----------------------------------------------------------------------|
+| `--cache-file`/`-c` | Path to write the latest reading file. Must end in `.env` or `.json` |
+| `--nightscout`/`-n` | URL of your Nightscout deployment                                    |
 
 
 ### Setup on macOS
@@ -42,5 +57,3 @@ setup as a Windows Service:
 * [Visualizing your real-time blood sugar values AND a Git Prompt on Windows
   PowerShell and Linux
   Bash](https://www.hanselman.com/blog/VisualizingYourRealtimeBloodSugarValuesANDAGitPromptOnWindowsPowerShellAndLinuxBash.aspx)
-
-[ps1]: https://github.com/TooTallNate/nightscout-ps1
