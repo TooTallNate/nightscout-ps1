@@ -8,7 +8,6 @@ tag="$(git describe --tags)"
 mkdir -p "${dir}"
 
 pkg . \
-  --config package.json \
   --output "${dir}/nightscout-ps1-v${tag}" \
   -t node9-alpine,node9-linux,node9-macos,node9-win
 
