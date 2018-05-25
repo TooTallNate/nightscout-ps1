@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-dir=packed
+dir=.packed
 arch="$(node -p process.arch)"
 tag="$(git describe --tags)"
 

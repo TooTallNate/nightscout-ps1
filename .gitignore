@@ -1,2 +1,2 @@
-packed
-node_modules
+/.packed
+/node_modules
