@@ -54,6 +54,4 @@ sudo systemd enable nightscout-ps1
 Check out this blog post by [Scott Hanselman](https://twitter.com/shanselman) to
 setup as a Windows Service:
 
-* [Visualizing your real-time blood sugar values AND a Git Prompt on Windows
-  PowerShell and Linux
-  Bash](https://www.hanselman.com/blog/VisualizingYourRealtimeBloodSugarValuesANDAGitPromptOnWindowsPowerShellAndLinuxBash.aspx)
+> [Visualizing your real-time blood sugar values AND a Git Prompt on Windows PowerShell and Linux Bash](https://www.hanselman.com/blog/VisualizingYourRealtimeBloodSugarValuesANDAGitPromptOnWindowsPowerShellAndLinuxBash.aspx)
