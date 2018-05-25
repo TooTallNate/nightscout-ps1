@@ -4,8 +4,7 @@ YELLOW="$(tput setaf 3 2>/dev/null ||:)"
 NO_COLOR="$(tput sgr0 2>/dev/null ||:)"
 
 nightscout_ps1() {
-	#source ~/.n.env
-	eval "$(cat ~/.n.env | sed 's/^/local /')"
+	eval "$(cat ~/.nightscout-ps1.env | sed 's/^/local /')"
 
 	local trend="?"
 	case "${latest_entry_direction}" in
@@ -19,15 +18,12 @@ nightscout_ps1() {
 		NONE) trend="⇼";;
 	esac
 
+	local color="${GREEN}"
 	if [ "${latest_entry_mgdl}" -ge "${settings_thresholds_bg_target_top}" ]; then
-		printf "\001${YELLOW}\002"
+		color="${YELLOW}"
 	elif [ "${latest_entry_mgdl}" -le "${settings_thresholds_bg_target_bottom}" ]; then
-		printf "\001${RED}\002"
-	else
-		printf "\001${GREEN}\002"
+		color="${RED}"
 	fi
-	printf "%03d %s" "${latest_entry_mgdl}" "${trend}"
-	printf "\001${NO_COLOR}\002"
-}
 
-nightscout_ps1
+	printf "\001%s\002%03d %s\001%s\002" "${color}" "${latest_entry_mgdl}" "${trend}" "${NO_COLOR}"
+}
