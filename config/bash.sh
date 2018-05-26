@@ -28,7 +28,8 @@ nightscout_ps1() {
 	fi
 
 	# If the previous reading was more than 6 minutes ago (5 minutes is
-	# normal, plus or minus some time to allow the reading to be uploaded
+	# normal, plus or minus some time to allow the reading to be uploaded,
+	# then the delta is considered questionable so append an asterisk
 	if [ "$((${latest_entry_mills} - ${previous_entry_mills}))" -gt "${SIX_MINUTES_MS}" ]; then
 		delta="${delta}*"
 	fi
