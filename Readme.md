@@ -3,6 +3,8 @@
 A daemon that periodically syncs the latest two entries from Nightscout to
 a file the can be consumed by your command line prompt (a.k.a. `$PS1`).
 
+![](https://user-images.githubusercontent.com/71256/40580173-57716ae8-60ee-11e8-8afa-644c198748fa.png)
+
 ## Installation
 
 Preferred installation is by downloading a pre-compiled binary for your platform:
