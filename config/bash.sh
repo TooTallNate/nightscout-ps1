@@ -33,12 +33,12 @@ nightscout_ps1() {
 		delta="${delta}*"
 	fi
 
-	if [ "${settings_alarm_timeago_urgent}" = "true" ] && [ "${mins_ago}" -gt "${settings_alarm_timeago_urgent_mins}" ]; then
+	if [ "${settings_alarm_timeago_urgent}" = "true" ] && [ "${mins_ago}" -ge "${settings_alarm_timeago_urgent_mins}" ]; then
 		trend='↛'
 		color="${INVERSE}${BOLD}${RED}"
 		bgl="$(echo "${bgl}" | nightscout_strikethrough)"
 		delta="$(echo "${delta}" | nightscout_strikethrough)"
-	elif [ "${settings_alarm_timeago_warn}" = "true" ] && [ "${mins_ago}" -gt "${settings_alarm_timeago_warn_mins}" ]; then
+	elif [ "${settings_alarm_timeago_warn}" = "true" ] && [ "${mins_ago}" -ge "${settings_alarm_timeago_warn_mins}" ]; then
 		trend='↛'
 		color="${INVERSE}${BOLD}${YELLOW}"
 		bgl="$(echo "${bgl}" | nightscout_strikethrough)"
