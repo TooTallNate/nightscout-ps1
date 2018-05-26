@@ -66,6 +66,6 @@ nightscout_ps1() {
 		fi
 	fi
 
-	printf "\001%s\002%d %s %s\001%s\002" \
+	printf "\001%s\002%s %s %s\001%s\002" \
 		"${color}" "${bgl}" "${delta}" "${trend}" "${NO_COLOR}"
 }
