@@ -1,0 +1,107 @@
+{
+	"previousEntry": {
+		"mgdl": 148,
+		"mills": 1527544346000,
+		"device": "share2",
+		"direction": "Flat",
+		"scaled": 148
+	},
+	"latestEntry": {
+		"mgdl": 156,
+		"mills": 1527544646000,
+		"device": "share2",
+		"direction": "Flat",
+		"scaled": 156
+	},
+	"settings": {
+		"units": "mg/dl",
+		"timeFormat": 24,
+		"nightMode": false,
+		"editMode": true,
+		"showRawbg": "never",
+		"customTitle": "Nightscout",
+		"theme": "colors",
+		"alarmUrgentHigh": true,
+		"alarmUrgentHighMins": [
+			30,
+			60,
+			90,
+			120
+		],
+		"alarmHigh": true,
+		"alarmHighMins": [
+			30,
+			60,
+			90,
+			120
+		],
+		"alarmLow": true,
+		"alarmLowMins": [
+			15,
+			30,
+			45,
+			60
+		],
+		"alarmUrgentLow": true,
+		"alarmUrgentLowMins": [
+			15,
+			30,
+			45
+		],
+		"alarmUrgentMins": [
+			30,
+			60,
+			90,
+			120
+		],
+		"alarmWarnMins": [
+			30,
+			60,
+			90,
+			120
+		],
+		"alarmTimeagoWarn": true,
+		"alarmTimeagoWarnMins": 15,
+		"alarmTimeagoUrgent": true,
+		"alarmTimeagoUrgentMins": 30,
+		"language": "en",
+		"scaleY": "log",
+		"showPlugins": " delta direction upbat",
+		"showForecast": "ar2",
+		"focusHours": 3,
+		"heartbeat": 60,
+		"baseURL": "https://<YOUR NIGHTSCOUT URL>",
+		"authDefaultRoles": "readable",
+		"thresholds": {
+			"bgHigh": 260,
+			"bgTargetTop": 180,
+			"bgTargetBottom": 80,
+			"bgLow": 55
+		},
+		"DEFAULT_FEATURES": [
+			"bgnow",
+			"delta",
+			"direction",
+			"timeago",
+			"devicestatus",
+			"upbat",
+			"errorcodes",
+			"profile"
+		],
+		"alarmTypes": [
+			"predict"
+		],
+		"enable": [
+			"bridge",
+			"bgnow",
+			"delta",
+			"direction",
+			"timeago",
+			"devicestatus",
+			"upbat",
+			"errorcodes",
+			"profile",
+			"ar2"
+		]
+	}
+}

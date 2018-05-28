@@ -88,11 +88,11 @@ file extension. These are the supported format types:
 ### `.env`
 
 Formatted with `key=value` pairs that may be `source` or `eval`'d in a shell
-script (i.e. your `.bashrc` file). *Example:*
+script (i.e. your `.bashrc` file). [_Example_](examples/nightscout-ps1.env).
 
 ### `.json`
 
 Formatted as a JSON file, which may consumed by `jq` or other related tools.
-*Example:*
+[_Example_](examples/nightscout-ps1.json).
 
 [config]: #configuring-your-ps1
