@@ -30,7 +30,7 @@ $ nightscout-ps1 -n <Nightscout URL> -c ~/.nightscout-ps1.env
 
 | Flag                |  Description                                                         |
 |---------------------|----------------------------------------------------------------------|
-| `--cache-file`/`-c` | Path to write the latest reading file. Must end in `.env` or `.json`, may be specified more than once |
+| `--cache-file`/`-c` | Path to write the latest reading file. Must end in `.env` or `.json`, may be specified more than once. Defaults to `~/.nightscout-ps1.env`. |
 | `--nightscout`/`-n` | URL of your Nightscout deployment                                    |
 
 ### Setup on macOS
