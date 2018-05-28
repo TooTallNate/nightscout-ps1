@@ -63,7 +63,7 @@ setup as a Windows Service:
 > [Visualizing your real-time blood sugar values AND a Git Prompt on Windows PowerShell and Linux Bash](https://www.hanselman.com/blog/VisualizingYourRealtimeBloodSugarValuesANDAGitPromptOnWindowsPowerShellAndLinuxBash.aspx)
 
 
-## Configure your `PS1`
+## Configuring your `PS1`
 
 The files in the `config` directory include pre-configured functions for reading
 the cache files created by `nightscout-ps1`.
@@ -95,4 +95,4 @@ script (i.e. your `.bashrc` file). *Example:*
 Formatted as a JSON file, which may consumed by `jq` or other related tools.
 *Example:*
 
-[config]: #configure-your-ps1
+[config]: #configuring-your-ps1
