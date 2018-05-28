@@ -6,7 +6,7 @@ After=network.target
 User=__YOUR_USERNAME__
 Group=__YOUR_GROUP__
 Type=simple
-ExecStart=/usr/local/bin/nightscout-ps1-daemon __YOUR_NIGHTSCOUT_URL__
+ExecStart=/usr/local/bin/nightscout-ps1 __YOUR_NIGHTSCOUT_URL__
 Environment=DEBUG=nightscout-ps1*
 Restart=on-failure
 
