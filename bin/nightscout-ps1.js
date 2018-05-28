@@ -53,13 +53,16 @@ args
 	.option(
 		'cache-file',
 		'Path to write the latest reading file',
-		[path.join(homedir, '.nightscout-ps1.env')]
+		['~/.nightscout-ps1.env']
 	);
 
 const flags = args.parse(process.argv, {name: packageName});
 
+// Resolve ~
+const cacheFile = flags.cacheFile.map(f => f.replace(/^~/, homedir));
+
 // Validate file extensions and pre-cache the formatters
-for (const file of flags.cacheFile) {
+for (const file of cacheFile) {
 	const {ext} = path.parse(file);
 	const formatter = formatters.get(ext);
 	if (!formatter) {
@@ -158,7 +161,7 @@ async function onDataUpdate(event) {
 		settings
 	};
 
-	await Promise.all(flags.cacheFile.map(async file => {
+	await Promise.all(cacheFile.map(async file => {
 		const str = formatters.get(file)(data);
 		await writeFile(file, `${str}\n`);
 		debug('Wrote %o', file);
