@@ -12,4 +12,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    repo: TooTallNate/nightscout-ps1-daemon
+    repo: TooTallNate/nightscout-ps1
