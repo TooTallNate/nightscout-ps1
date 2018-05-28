@@ -33,23 +33,27 @@ $ nightscout-ps1 -n <Nightscout URL> -c ~/.nightscout-ps1.env
 | `--cache-file`/`-c` | Path to write the latest reading file. Must end in `.env` or `.json`, may be specified more than once |
 | `--nightscout`/`-n` | URL of your Nightscout deployment                                    |
 
-
 ### Setup on macOS
 
 ```bash
+cp config/bash.sh ~/.nightscout-ps1
 cp service/io.n8.nightscout-ps1.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/io.n8.nightscout-ps1.plist
 ```
+
+Then see [Configuring your `PS1`][config] below.
 
 
 ### Setup on Linux
 
 ```bash
+cp config/bash.sh ~/.nightscout-ps1
 cp service/nightscout-ps1.service /etc/systemd/system/
 sudo systemd start nightscout-ps1
 sudo systemd enable nightscout-ps1
 ```
 
+Then see [Configuring your `PS1`][config] below.
 
 ### Setup on Windows
 
@@ -57,3 +61,38 @@ Check out this blog post by [Scott Hanselman](https://twitter.com/shanselman) to
 setup as a Windows Service:
 
 > [Visualizing your real-time blood sugar values AND a Git Prompt on Windows PowerShell and Linux Bash](https://www.hanselman.com/blog/VisualizingYourRealtimeBloodSugarValuesANDAGitPromptOnWindowsPowerShellAndLinuxBash.aspx)
+
+
+## Configure your `PS1`
+
+The files in the `config` directory include pre-configured functions for reading
+the cache files created by `nightscout-ps1`.
+
+For example, to consume the bash function in your `.bashrc` file, add something
+like:
+
+```bash
+source ~/.nightscout-ps1
+
+export PS1="\$(__ps1_colored_exit_code) \$ "
+```
+
+Be sure to add further customizations to your `PS1` to your liking!
+
+
+## Formats
+
+The `--cache-file`/`-c` flag determines how to format the output file based on the
+file extension. These are the supported format types:
+
+### `.env`
+
+Formatted with `key=value` pairs that may be `source` or `eval`'d in a shell
+script (i.e. your `.bashrc` file). *Example:*
+
+### `.json`
+
+Formatted as a JSON file, which may consumed by `jq` or other related tools.
+*Example:*
+
+[config]: #meh
