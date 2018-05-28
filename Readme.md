@@ -74,7 +74,7 @@ like:
 ```bash
 source ~/.nightscout-ps1
 
-export PS1="\$(__ps1_colored_exit_code) \$ "
+export PS1="\$(nightscout_ps1) \$ "
 ```
 
 Be sure to add further customizations to your `PS1` to your liking!
@@ -95,4 +95,4 @@ script (i.e. your `.bashrc` file). *Example:*
 Formatted as a JSON file, which may consumed by `jq` or other related tools.
 *Example:*
 
-[config]: #meh
+[config]: #configure-your-ps1
