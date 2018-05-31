@@ -1,8 +1,7 @@
 # nightscout-ps1
 [![Build Status](https://travis-ci.org/TooTallNate/nightscout-ps1.svg?branch=master)](https://travis-ci.org/TooTallNate/nightscout-ps1)
 
-A daemon that periodically syncs the latest two entries from Nightscout to
-a file the can be consumed by your command line prompt (a.k.a. [`$PS1`][ps1]).
+Syncs the latest two entries from Nightscout to a file the can be consumed by your command line prompt (a.k.a. [`$PS1`][ps1]).
 
 ![](https://user-images.githubusercontent.com/71256/40580173-57716ae8-60ee-11e8-8afa-644c198748fa.png)
 
