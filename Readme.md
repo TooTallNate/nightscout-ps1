@@ -10,7 +10,7 @@ a file the can be consumed by your command line prompt (a.k.a. [`$PS1`][ps1]).
 
 Preferred installation is by downloading a pre-compiled binary for your platform:
 
-* [GitHub Releases](https://github.com/TooTallNate/nightscout-ps1/releases)
+* [GitHub Releases](https://github.com/TooTallNate/nightscout-ps1/releases/latest)
 
 If there is no binary for your platform, or you would simply like to install
 from source, you may install from the `npm` registry:
