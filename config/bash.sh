@@ -67,6 +67,13 @@ nightscout_ps1() {
 		fi
 	fi
 
+	if [ "${latest_entry_direction}" = "NOT COMPUTABLE" ]; then
+		color="${BOLD}${RED}"
+		bgl="?"
+		delta="NC"
+		trend="✖︎"
+	fi
+
 	printf "\001%s\002%s %s %s\001%s\002" \
 		"${color}" "${bgl}" "${delta}" "${trend}" "${NO_COLOR}"
 }
