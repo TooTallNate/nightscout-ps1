@@ -9,7 +9,7 @@ mkdir -p "${dir}"
 
 pkg . \
   --output "${dir}/nightscout-ps1-v${tag}" \
-  -t node9-alpine,node9-linux,node9-macos,node9-win
+  -t node10-alpine,node10-linux,node10-macos,node10-win
 
 for fullpath in "${dir}"/*; do
   ext=""
