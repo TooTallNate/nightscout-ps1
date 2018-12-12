@@ -10,21 +10,21 @@
     "url": "git://github.com/TooTallNate/nightscout-ps1-daeomon.git"
   },
   "dependencies": {
-    "args": "^3.0.8",
-    "debug": "^3.1.0",
-    "fs-extra": "^5.0.0",
-    "ms": "^2.1.1",
-    "node-fetch": "^1.7.3",
-    "snake-case": "^2.1.0",
-    "socket.io-client": "^2.0.4",
-    "then-sleep": "^1.0.1",
+    "args": "5.0.0",
+    "debug": "4.1.0",
+    "fs-extra": "7.0.1",
+    "ms": "2.1.1",
+    "node-fetch": "2.3.0",
+    "snake-case": "2.1.0",
+    "socket.io-client": "2.2.0",
+    "then-sleep": "1.0.1",
     "wake-event": "0.0.1"
   },
   "devDependencies": {
     "@zeit/eslint-config-node": "0.3.0",
-    "@zeit/git-hooks": "^0.1.4",
+    "@zeit/git-hooks": "0.1.4",
     "eslint": "5.10.0",
-    "pkg": "^4.3.0-beta.5"
+    "pkg": "4.3.5"
   },
   "scripts": {
     "pack": "./pack.sh",
