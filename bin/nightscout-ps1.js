@@ -38,8 +38,8 @@ function *flatten(input, prefix = '') {
 	}
 }
 
-const toJson = data => JSON.stringify(data, null, '\t');
-const toEnv = data => Array.from(flatten(data))
+const toJson = (data) => JSON.stringify(data, null, '\t');
+const toEnv = (data) => Array.from(flatten(data))
 	.map(([key, value]) => `${key}=${JSON.stringify(value)}`)
 	.join('\n');
 
@@ -59,7 +59,7 @@ args
 const flags = args.parse(process.argv, {name: packageName});
 
 // Resolve ~
-const cacheFile = flags.cacheFile.map(f => f.replace(/^~/, homedir));
+const cacheFile = flags.cacheFile.map((f) => f.replace(/^~/, homedir));
 
 // Validate file extensions and pre-cache the formatters
 for (const file of cacheFile) {
@@ -84,7 +84,7 @@ if (!flags.nightscout) {
 	process.exit(1);
 }
 
-const resolvePrefix = async _href => {
+const resolvePrefix = async (_href) => {
 	let href = _href;
 	if (!url.parse(href).protocol) {
 		href = `http://${href}`;
@@ -95,7 +95,7 @@ const resolvePrefix = async _href => {
 };
 
 function exit(promise) {
-	promise.catch(err => {
+	promise.catch((err) => {
 		console.error(err);
 		process.exit(1);
 	});
@@ -120,11 +120,11 @@ async function pollStatus() {
 }
 
 function emit(e, ...argv) {
-	return new Promise(resolve => e.emit(...argv, resolve));
+	return new Promise((resolve) => e.emit(...argv, resolve));
 }
 
 function once(e, name) {
-	return new Promise(resolve => e.once(name, resolve));
+	return new Promise((resolve) => e.once(name, resolve));
 }
 
 async function onDataUpdate(event) {
@@ -161,7 +161,7 @@ async function onDataUpdate(event) {
 		settings
 	};
 
-	await Promise.all(cacheFile.map(async file => {
+	await Promise.all(cacheFile.map(async (file) => {
 		const str = formatters.get(file)(data);
 		await writeFile(file, `${str}\n`);
 		debug('Wrote %o', file);
@@ -178,7 +178,7 @@ async function main() {
 
 	debug('Creating socket.io connection %o', nightscout);
 	socket = sio.connect(nightscout);
-	socket.on('dataUpdate', e => exit(onDataUpdate(e)));
+	socket.on('dataUpdate', (e) => exit(onDataUpdate(e)));
 
 	const auth = await emit(socket, 'authorize', {
 		client: 'web',

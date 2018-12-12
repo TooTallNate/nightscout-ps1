@@ -21,9 +21,9 @@
     "wake-event": "0.0.1"
   },
   "devDependencies": {
-    "@zeit/eslint-config-node": "0.2.13",
+    "@zeit/eslint-config-node": "0.3.0",
     "@zeit/git-hooks": "^0.1.4",
-    "eslint": "4.19.1",
+    "eslint": "5.10.0",
     "pkg": "^4.3.0-beta.5"
   },
   "scripts": {
