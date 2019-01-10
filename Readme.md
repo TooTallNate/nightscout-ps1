@@ -36,7 +36,6 @@ $ nightscout-ps1 -n <Nightscout URL> -c ~/.nightscout-ps1.env
 ### Setup on macOS
 
 ```bash
-cp config/bash.sh ~/.nightscout-ps1
 cp service/io.n8.nightscout-ps1.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/io.n8.nightscout-ps1.plist
 ```
@@ -47,7 +46,6 @@ Then see [Configuring your `PS1`][config] below.
 ### Setup on Linux
 
 ```bash
-cp config/bash.sh ~/.nightscout-ps1
 cp service/nightscout-ps1.service /etc/systemd/system/
 sudo systemd start nightscout-ps1
 sudo systemd enable nightscout-ps1
@@ -65,14 +63,13 @@ setup as a Windows Service:
 
 ## Configuring your `PS1`
 
-The files in the `config` directory include pre-configured functions for reading
-the cache files created by `nightscout-ps1`.
+First, [install `import`](https://import.pw/importpw/import/docs/install.md).
 
-For example, to consume the bash function in your `.bashrc` file, add something
-like:
+Second, add the following to your `.bashrc` file:
 
 ```bash
-source ~/.nightscout-ps1
+. "$(which import)"
+import "tootallnate/nightscout-ps1@3.1.0"
 
 export PS1="\$(nightscout_ps1) \$ "
 ```
