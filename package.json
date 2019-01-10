@@ -1,6 +1,6 @@
 {
   "name": "nightscout-ps1",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "Syncs the latest blood glucose reading from Nightscout to an eval file",
   "bin": "./bin/nightscout-ps1.js",
   "author": "Nathan Rajlich <n@n8.io>",
