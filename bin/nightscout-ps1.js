@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#!/usr/bin/env node
 const ms = require('ms');
 const os = require('os');
 const url = require('url');
