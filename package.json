@@ -27,6 +27,7 @@
     "pkg": "4.3.5"
   },
   "scripts": {
+    "test": "true",
     "pack": "./pack.sh",
     "lint": "eslint --ext .jsx,.js . && ./scripts/lint.sh",
     "lint-staged": "git diff --diff-filter=ACMRT --cached --name-only '*.js' '*.jsx' | xargs eslint"
