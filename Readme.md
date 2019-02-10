@@ -25,8 +25,11 @@ The flags for usage of `nightscout-ps1` are listed here, however it is highly
 recommended that you set up the daemon as a "service" for your operating system.
 
 ```bash
-$ nightscout-ps1 -n <Nightscout URL> -c ~/.nightscout-ps1.env
+$ nightscout-ps1 -n "my-nightscout-url.com" -c ~/.nightscout-ps1.env
 ```
+
+Replace `my-nightscout-url.com` with the actual URL to your own Nightscout
+deployment.
 
 | Flag                |  Description                                                         |
 |---------------------|----------------------------------------------------------------------|
