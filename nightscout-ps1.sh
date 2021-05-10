@@ -27,6 +27,16 @@ nightscout_ps1() {
 		delta="+${delta}"
 	fi
 
+	# If the server is set to use mmol units get the scaled values
+	# and handle the delta calculation needing to support floating points
+	if [ "${displaySettings}" = "mmol" ]; then
+		bgl="${latest_entry_scaled}"
+		# use bc to work out the floating point delta
+		delta="$(bc <<< ${latest_entry_scaled}-${previous_entry_scaled})"
+		# format the delta to 1 d.p. and add the + symbol
+		delta="$(printf '%+0.1f' "${delta}")"
+	fi
+
 	# If the previous reading was more than 6 minutes ago (5 minutes is
 	# normal, plus or minus some time to allow the reading to be uploaded,
 	# then the delta is considered questionable so append an asterisk
